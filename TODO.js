@@ -46,16 +46,16 @@ function timeOut(func) {
     setTimeout(func, 2000)
 }
 
-function onClickHandler() {
+function onClickHandler() { // can't use arrow fn because 'this' will refer to window object
     var toRemove = this.querySelector('span p');
     var text = toRemove.innerText;
     toRemove.innerHTML = '<s>' + text + '</s>';
 
     // add a 2 second delay
-    console.log(this);
-    var p = this;
-    console.log(p);
-    window.setTimeout(function() {p.style.display = 'none'}, 1000); // why doesn't it work when I use 'this' instead of p
+    // console.log(this);
+    var self = this;
+    // console.log(self);
+    window.setTimeout(function() {self.style.display = 'none'}, 1000); // why doesn't it work when I use 'this' instead of p
 } // try to do this by changing toDoShowing to toDoHidden and adding a transition delay through CSS
 
 
@@ -79,7 +79,7 @@ var config = {
 var callback = function(mutationsList) {
     for(var mutation of mutationsList) {
         if (mutation.type == 'childList') {
-            console.log('A child node has been added or removed.');
+            // console.log('A child node has been added or removed.');
             for(let i = 0; i < toDoShowings.length; i++) {
                 toDoShowings[i].addEventListener('click', onClickHandler);
             }
